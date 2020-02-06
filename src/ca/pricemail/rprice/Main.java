@@ -1,10 +1,15 @@
 package ca.pricemail.rprice;
 
 import java.io.IOException;
+
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.TreeMap;
+import java.util.function.Function;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -24,11 +29,11 @@ public class Main {
 
 			System.out.println(g);
 
-			for (Map.Entry<String, Map<String, Map<String, Long>>> entryP : g.entrySet()) {
+			for (Map.Entry<String, Map<String, Map<String, Long>>> entryP : new TreeMap<>(g).entrySet()) {
 				long sump = 0;
-				for (Entry<String, Map<String, Long>> entryC : entryP.getValue().entrySet()) {
+				for (Entry<String, Map<String, Long>> entryC : new TreeMap<>(entryP.getValue()).entrySet()) {
 					long sumc = 0;
-					for (Entry<String, Long> entryS : entryC.getValue().entrySet()) {
+					for (Entry<String, Long> entryS : new TreeMap<>(entryC.getValue()).entrySet()) {
 						System.out.println(entryS.getKey() + "-----" + entryS.getValue());
 						sumc += entryS.getValue();
 					}
@@ -41,6 +46,11 @@ public class Main {
 			e.printStackTrace();
 		}
 
+	}
+
+	public static <T, K extends Comparable<K>> Collector<T, ?, TreeMap<K, List<T>>> sortedGroupingBy(
+			Function<T, K> function) {
+		return Collectors.groupingBy(function, TreeMap::new, Collectors.toList());
 	}
 
 }
