@@ -1,15 +1,11 @@
 package ca.pricemail.rprice;
 
 import java.io.IOException;
-
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.TreeMap;
-import java.util.function.Function;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collector;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
