@@ -17,38 +17,11 @@ public class Main {
 
 		final String fileName = args[1];
 
-		getRollupFromFile(fileName).parallelStream().forEachOrdered(System.out::println);
-	}
-
-	public static List<Pair<String, Long>> getRollupFromFile(String fileName) {
-		List<Pair<String, Long>> returnValue = new ArrayList<>();
-
 		// read file into stream, try-with-resources
 		try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
-			Map<String, Map<String, Map<String, Long>>> g = stream.map(line -> new SchoolGradeRecord(line))
-					.collect(Collectors.groupingBy(SchoolGradeRecord::getProvince, TreeMap::new,
-							Collectors.groupingBy(SchoolGradeRecord::getCity, TreeMap::new,
-									Collectors.groupingBy(SchoolGradeRecord::getSchool, TreeMap::new,
-											Collectors.summingLong(SchoolGradeRecord::getPopulation)))));
-
-			for (Map.Entry<String, Map<String, Map<String, Long>>> entryP : g.entrySet()) {
-				long sump = 0;
-				for (Entry<String, Map<String, Long>> entryC : entryP.getValue().entrySet()) {
-					long sumc = 0;
-					for (Entry<String, Long> entryS : entryC.getValue().entrySet()) {
-						returnValue.add(Pair.of(entryS.getKey(), entryS.getValue()));
-						sumc += entryS.getValue();
-					}
-					returnValue.add(Pair.of(entryC.getKey(), sumc));
-					sump += sumc;
-				}
-				returnValue.add(Pair.of(entryP.getKey(), sump));
-			}
+			SchoolGradeRollup.getRollupFromStream(stream).forEach(System.out::println);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		return returnValue;
-
 	}
 }
