@@ -2,6 +2,11 @@ package ca.pricemail.rprice;
 
 import java.util.Objects;
 
+// This is a Pair class that I put together from examples on Stack Overflow
+// https://stackoverflow.com/questions/521171/a-java-collection-of-value-pairs-tuples
+// I took two answers that seemed good, and paired them together...
+// Its tragic that Java doesn't have a proper pair class in Java8
+
 public class Pair<L, R> {
 
 	public final L left;

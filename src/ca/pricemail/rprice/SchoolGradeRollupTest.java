@@ -11,6 +11,7 @@ class SchoolGradeRollupTest {
 
 	@Test
 	void testGetRollupFromStream() {
+		// This is the test data given in the quiz document
 		String[] inputArray = {
 				"ON\tWaterloo\tSchool1\tK1000",
 				"ON\tWaterloo\tSchool1\t12000",
@@ -22,6 +23,7 @@ class SchoolGradeRollupTest {
 				"ON\tKitchener\tSchool3\t40000",
 				};
 		
+		// These are the quiz results given in the quiz document
 		List<Pair<String, Long>> correctResultList = Arrays.asList(
 				Pair.of("School3", 108l),
 				Pair.of("Kitchener", 108l),
@@ -31,6 +33,7 @@ class SchoolGradeRollupTest {
 				Pair.of("ON", 6108l)
 		);
 		
+		// Run the rollup using a String stream...
 		List<Pair<String, Long>> returnValue = SchoolGradeRollup.getRollupFromStream(Arrays.stream(inputArray));
 		
 		assertEquals(correctResultList,returnValue);

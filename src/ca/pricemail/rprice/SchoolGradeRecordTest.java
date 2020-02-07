@@ -10,6 +10,7 @@ class SchoolGradeRecordTest {
 	void testSchoolGradeRecord1() {
 		SchoolGradeRecord r = new SchoolGradeRecord("ON\tWaterloo\tSchool1\tK1000");
 
+		// Make sure a valid record gets cracked correctly
 		assertEquals("ON", r.getProvince());
 		assertEquals("Waterloo", r.getCity());
 		assertEquals("School1", r.getSchool());
